@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cel-Far</string>
+    <string name="intro">Hello, you can use this application to check your skills on temperature conversion, or caculate the correct value.</string>
+    <string name="radiocal">Calculate</string>
+    <string name="radioche">Check</string>
+    <string name="bt">GO!</string>
+</resources>
