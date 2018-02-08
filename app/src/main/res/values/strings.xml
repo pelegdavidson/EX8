@@ -4,4 +4,18 @@
     <string name="radiocal">Calculate</string>
     <string name="radioche">Check</string>
     <string name="bt">GO!</string>
+
+    <string name="answer1">
+    <item quantity="one">Bravo! the temperature %1$s C, is indeed %2$s F</item>
+    </string>
+
+    <string name="answer2">Oops! your answer is wrong, you may tray again.</string>
+
+    <string name="answer3">
+    <item quantity="one">The temperature %1$s F, is converted to %2$s C</item>
+    </string>
+
+    <string name="answer4">
+    <item quantity="one">The temperature %1$s C, is converted to %2$s F</item>
+    </string>
 </resources>

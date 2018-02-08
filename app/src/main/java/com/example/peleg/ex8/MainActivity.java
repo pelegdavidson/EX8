@@ -33,9 +33,13 @@ public class MainActivity extends Activity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 RadioButton radioButton = radioGroup.findViewById(i);
                 index = radioGroup.indexOfChild(radioButton);
-                if(index>0){
+                if(index>0) {
                     edt1.setEnabled(true);
                     edt2.setEnabled(true);
+                }else{
+                    edt2.setEnabled(true);
+                    edt1.setEnabled(true);
+
                 }
             }
         });
@@ -45,14 +49,8 @@ public class MainActivity extends Activity {
                 String s1 = edt1.getText().toString();
                 String s2 = edt2.getText().toString();
                 Intent i = new Intent(MainActivity.this, Main2Activity.class);
-                if(index==0){
-                    i.putExtra("content1", s1);
-                    i.putExtra("content2", s2);
-                }else if(edt1.getText().length() > 0)
-                    i.putExtra("content1", s1);
-                else
-                    i.putExtra("content2", s2);
-
+                i.putExtra("content1", s1);
+                i.putExtra("content2", s2);
                 startActivityForResult(i, REGISTERCODE);
             }
         });
@@ -70,6 +68,8 @@ public class MainActivity extends Activity {
                 bt.setEnabled((edt1.getText().length() > 0 &&
                         edt2.getText().length() > 0));
             }else {
+                edt2.setEnabled(true);
+                edt1.setEnabled(true);
                 bt.setEnabled((edt1.getText().length() > 0 ||
                         edt2.getText().length() > 0));
                 if(edt1.getText().length() > 0)
@@ -86,5 +86,16 @@ public class MainActivity extends Activity {
         @Override
         public void afterTextChanged(Editable s) {}
     };
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REGISTERCODE && resultCode == RESULT_OK){
+            if(data.getStringExtra("content1").length()>0){
+                edt1.setText(data.getStringExtra("content1"));
+            }
+            if(data.getStringExtra("content2").length()>0){
+                edt2.setText(data.getStringExtra("content2"));
+            }
+        }
+    }
 }
