@@ -71,8 +71,8 @@
         android:id="@+id/linearLayout3">
 
         <EditText
-            android:layout_width="70dp"
-            android:layout_height="35dp"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
             android:enabled="false"
             android:id="@+id/edt1"
             android:inputType="numberDecimal"/>
@@ -83,8 +83,8 @@
             android:enabled="false"
             android:text="@string/bt"/>
         <EditText
-            android:layout_width="70dp"
-            android:layout_height="35dp"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
             android:enabled="false"
             android:inputType="numberDecimal"
             android:id="@+id/edt2"/>

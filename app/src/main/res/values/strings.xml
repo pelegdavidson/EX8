@@ -18,4 +18,5 @@
     <string name="answer4">
     <item quantity="one">The temperature %1$s C, is converted to %2$s F</item>
     </string>
+    <string name="btback">Return</string>
 </resources>
