@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
         edt2 = (EditText) findViewById(R.id.edt2);
         edt1.addTextChangedListener(new tw());
         edt2.addTextChangedListener(new tw());
+
         RadioGroup group= findViewById(R.id.rg);
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -36,10 +37,17 @@ public class MainActivity extends Activity {
                 if(index>0) {
                     edt1.setEnabled(true);
                     edt2.setEnabled(true);
+                    if(edt1.getText().length() > 0 &&
+                            edt2.getText().length() > 0){
+                        bt.setEnabled(false);
+                    }
                 }else{
                     edt2.setEnabled(true);
                     edt1.setEnabled(true);
-
+                    if(edt1.getText().length() > 0 &&
+                            edt2.getText().length() > 0){
+                        bt.setEnabled(true);
+                    }
                 }
             }
         });
@@ -67,16 +75,19 @@ public class MainActivity extends Activity {
                 edt1.setEnabled(true);
                 bt.setEnabled((edt1.getText().length() > 0 &&
                         edt2.getText().length() > 0));
+
             }else {
-                edt2.setEnabled(true);
-                edt1.setEnabled(true);
-                bt.setEnabled((edt1.getText().length() > 0 ||
-                        edt2.getText().length() > 0));
-                if(edt1.getText().length() > 0)
-                    edt2.setEnabled(false);
-                else
-                    edt1.setEnabled(false);
+                if(edt1.getText().length() > 0&& edt2.getText().length() > 0) {
                     edt2.setEnabled(true);
+                    edt1.setEnabled(true);
+                    bt.setEnabled(false);
+                } else if(edt2.getText().length() > 0){
+                    edt1.setEnabled(false);
+                    bt.setEnabled(true);
+                }else if(edt1.getText().length() > 0){
+                    edt2.setEnabled(false);
+                    bt.setEnabled(true);
+                }
 
             }
         }
@@ -96,6 +107,10 @@ public class MainActivity extends Activity {
             if(data.getStringExtra("content2").length()>0){
                 edt2.setText(data.getStringExtra("content2"));
             }
+            if(edt1.getText().length() > 0 &&
+                    edt2.getText().length() > 0&&
+                    index>0)
+                bt.setEnabled(false);
         }
     }
 }

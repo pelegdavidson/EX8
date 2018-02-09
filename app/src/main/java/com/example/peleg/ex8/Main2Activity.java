@@ -23,22 +23,22 @@ public class Main2Activity extends Activity implements View.OnClickListener{
         findViewById(R.id.btback).setOnClickListener(this);
         if(s1.length() > 0 &&
                 s2.length() > 0&&
-                ((Integer.parseInt(s2)*(9/5)) + 32)==Integer.parseInt(s1)){
+                ((Double.parseDouble(s2)*(9.0/5.0)) + 32.0)==Double.parseDouble(s1)){
            TextView tv =  findViewById(R.id.tv2);
            tv.setText(res.getString(R.string.answer1 ,s2,s1));
         }else if(s1.length() > 0 &&
                 s2.length() > 0&&
-                ((Integer.parseInt(s2)*(9/5)) + 32)!=Integer.parseInt(s1)){
+                ((Double.parseDouble(s2)*(9.0/5.0)) + 32.0)!=Integer.parseInt(s1)){
             TextView tv =  findViewById(R.id.tv2);
             tv.setText(res.getString(R.string.answer2));
         }else if(s1.length() > 0){
             TextView tv =  findViewById(R.id.tv2);
-            s2 = Double.toString((Integer.parseInt(s1)-32.0)*(5.0/9.0));
-            tv.setText(res.getString(R.string.answer3 , s1,((Integer.parseInt(s1)-32.0)*(5.0/9.0))));
+            s2 = Double.toString((Double.parseDouble(s1)-32.0)*(5.0/9.0));
+            tv.setText(res.getString(R.string.answer3 , s1,((Double.parseDouble(s1)-32.0)*(5.0/9.0))));
         }else if(s2.length() > 0){
             TextView tv =  findViewById(R.id.tv2);
-            s1 = Double.toString(Integer.parseInt(s2)*(9.0/5.0)) + 32.0;
-            tv.setText(res.getString(R.string.answer4 ,s2,(Integer.parseInt(s2)*(9.0/5.0)) + 32.0));
+            s1 = Double.toString((Double.parseDouble(s2)*(9.0/5.0)) + 32.0);
+            tv.setText(res.getString(R.string.answer4 ,s2,(Double.parseDouble(s2)*(9.0/5.0)) + 32.0));
         }
 
     }

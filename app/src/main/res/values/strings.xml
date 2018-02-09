@@ -19,4 +19,7 @@
     <item quantity="one">The temperature %1$s C, is converted to %2$s F</item>
     </string>
     <string name="btback">Return</string>
+    <string name="tvpre">Set the number precision</string>
+    <string name="tvnone">none</string>
+    <string name="tvfull">full</string>
 </resources>
