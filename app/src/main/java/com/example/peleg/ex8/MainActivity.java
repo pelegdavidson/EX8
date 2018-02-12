@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 public class MainActivity extends Activity {
     EditText edt1;
@@ -22,6 +23,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar tb = findViewById(R.id.toolbar);
+        tb.setLogo(R.mipmap.logo);
+        setActionBar(tb);
         bt = (Button) findViewById(R.id.bt);
         edt1 = (EditText) findViewById(R.id.edt1);
         edt2 = (EditText) findViewById(R.id.edt2);

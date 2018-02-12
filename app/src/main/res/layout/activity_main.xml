@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.peleg.ex8.MainActivity">
 
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@android:style/Theme.WithActionBar" />
+
     <LinearLayout
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -63,31 +70,60 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:layout_below="@id/linearLayout1"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="70dp"
         android:id="@+id/linearLayout3">
 
-        <EditText
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:enabled="false"
-            android:id="@+id/edt1"
-            android:inputType="numberDecimal"/>
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:enabled="false"
+                android:layout_weight="1"
+                android:id="@+id/edt1"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_weight="1"
+                android:text="Farenhait" />
+        </LinearLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/bt"
             android:enabled="false"
             android:text="@string/bt"/>
-        <EditText
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:enabled="false"
-            android:inputType="numberDecimal"
-            android:id="@+id/edt2"/>
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:enabled="false"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:id="@+id/edt2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_weight="1"
+                android:text="Celsius"/>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
