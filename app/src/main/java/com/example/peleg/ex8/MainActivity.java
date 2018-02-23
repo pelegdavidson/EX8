@@ -1,10 +1,14 @@
 package com.example.peleg.ex8;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MyDialog.ResultListener{
     EditText edt1;
     EditText edt2;
     int index;
@@ -24,7 +28,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar tb = findViewById(R.id.toolbar);
-        tb.setLogo(R.mipmap.logo);
+        tb.setLogo(R.mipmap.celsius_round);
         setActionBar(tb);
         bt = (Button) findViewById(R.id.bt);
         edt1 = (EditText) findViewById(R.id.edt1);
@@ -67,6 +71,17 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+    @Override
+    public void onFinishDialog(int requestCode, Object results) {
+    switch (requestCode){
+        case MyDialog.EXIT_DIALOG:
+            finish();
+            System.exit(0);
+            break;
+    }
+    }
+
     private class tw implements TextWatcher {
 
         public tw() {
@@ -115,6 +130,37 @@ public class MainActivity extends Activity {
                     edt2.getText().length() > 0&&
                     index>0)
                 bt.setEnabled(false);
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Context context= getApplicationContext();
+        CharSequence text;
+        int duration= Toast.LENGTH_SHORT;
+        Toast toast;
+        switch (item.getItemId()) {
+            case R.id.settings:
+                text = "setting pushed";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+                return true;
+            case R.id.help:
+                context = getApplicationContext();
+                text = "help pushed";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+                return true;
+            case R.id.exit:
+                MyDialog.newInstance(MyDialog.EXIT_DIALOG).show(getFragmentManager(),"Exit Dialog");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
