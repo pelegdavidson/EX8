@@ -29,8 +29,16 @@ public class MyDialog extends DialogFragment{
         this.regcode = getArguments().getInt("rc");
         if(regcode == EXIT_DIALOG)
             return buildExitDialog().create();
-        else
-            return null;
+        return buildPrecisinDialog().create();
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.listener = (ResultListener) context;
+        } catch (ClassCastException e){
+            throw new ClassCastException("hosting activity must implement ResultListener");
+        }
     }
 
     private AlertDialog.Builder buildExitDialog(){
@@ -56,17 +64,31 @@ public class MyDialog extends DialogFragment{
                 );
 
     }
-    public interface ResultListener {
-        void onFinishDialog(int requestCode, Object results);
-    }
+    private AlertDialog.Builder buildPrecisinDialog() {
+        return new AlertDialog.Builder(getActivity())
+                .setView(R.layout.layoutprecision)
+                .setPositiveButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(getActivity(), "You pushed cancel",
+                                        Toast.LENGTH_LONG).show();
+                                if (listener != null)
+                                    listener.onFinishDialog(regcode, "ok");
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.listener = (ResultListener) context;
-        } catch (ClassCastException e){
-            throw new ClassCastException("hosting activity must implement ResultListener");
-        }
+                            }
+                        })
+                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Toast.makeText(getActivity(), "You pushed ok",
+                                Toast.LENGTH_LONG).show();
+                        dismiss();
+                    }
+                });
+    }
+    public interface ResultListener{
+        void onFinishDialog(int requestcode, String ok);
     }
 }

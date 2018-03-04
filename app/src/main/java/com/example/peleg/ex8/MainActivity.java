@@ -3,6 +3,7 @@ package com.example.peleg.ex8;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -73,14 +74,19 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
     }
 
     @Override
-    public void onFinishDialog(int requestCode, Object results) {
-    switch (requestCode){
-        case MyDialog.EXIT_DIALOG:
-            finish();
-            System.exit(0);
-            break;
+    public void onFinishDialog(int requestcode, String ok) {
+        switch (requestcode)
+        {
+            case MyDialog.EXIT_DIALOG:
+                finish();
+                System.exit(0);
+            case MyDialog.PRECISION_DIALOG:
+
+
+
+        }
     }
-    }
+
 
     private class tw implements TextWatcher {
 
@@ -146,15 +152,13 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
         Toast toast;
         switch (item.getItemId()) {
             case R.id.settings:
-                text = "setting pushed";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
+                MyDialog.newInstance(MyDialog.PRECISION_DIALOG).show(getFragmentManager(), "precisin");
                 return true;
             case R.id.help:
-                context = getApplicationContext();
-                text = "help pushed";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                String url = "https://he.wikipedia.org/wiki/מעלות_פרנהייט\n";
+                i.setData(Uri.parse(url));
+                startActivity(i);
                 return true;
             case R.id.exit:
                 MyDialog.newInstance(MyDialog.EXIT_DIALOG).show(getFragmentManager(),"Exit Dialog");
