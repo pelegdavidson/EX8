@@ -6,6 +6,9 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyDialog extends DialogFragment{
@@ -65,30 +68,48 @@ public class MyDialog extends DialogFragment{
 
     }
     private AlertDialog.Builder buildPrecisinDialog() {
+        View view = getActivity().getLayoutInflater().inflate(R.layout.layoutprecision,null);
+        final SeekBar sk = view.findViewById(R.id.seekbar);
+        final TextView tvnum = view.findViewById(R.id.tvnum);
+        tvnum.setText(String.format("%.0f",123.0));
+        sk.setProgress(0);
+        sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tvnum.setText(String.format("%."+i+"f",123.0));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         return new AlertDialog.Builder(getActivity())
-                .setView(R.layout.layoutprecision)
+                .setView(view)
                 .setPositiveButton("Cancel",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(getActivity(), "You pushed cancel",
                                         Toast.LENGTH_LONG).show();
-                                if (listener != null)
-                                    listener.onFinishDialog(regcode, "ok");
-
-                            }
+                                dismiss();
+                                }
                         })
                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        Toast.makeText(getActivity(), "You pushed ok",
-                                Toast.LENGTH_LONG).show();
+                        listener.onFinishDialog(regcode,sk.getProgress());
                         dismiss();
                     }
                 });
     }
     public interface ResultListener{
-        void onFinishDialog(int requestcode, String ok);
+        void onFinishDialog(int requestcode, Object results);
     }
 }

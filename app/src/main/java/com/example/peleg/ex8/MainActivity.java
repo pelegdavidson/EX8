@@ -74,16 +74,26 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
     }
 
     @Override
-    public void onFinishDialog(int requestcode, String ok) {
+    public void onFinishDialog(int requestcode, Object results) {
         switch (requestcode)
         {
             case MyDialog.EXIT_DIALOG:
                 finish();
                 System.exit(0);
             case MyDialog.PRECISION_DIALOG:
+                setPrecision((Integer) results);
 
 
-
+        }
+    }
+    public void setPrecision(int newPrecision){
+        if(edt1.getText().length()>0){
+            Double d1 = Double.parseDouble(edt1.getText().toString());
+            edt1.setText(String.format("%."+newPrecision+"f",d1));
+        }
+        if(edt2.getText().length()>0){
+            Double d2 = Double.parseDouble(edt2.getText().toString());
+            edt2.setText(String.format("%."+newPrecision+"f",d2));
         }
     }
 
@@ -146,10 +156,6 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Context context= getApplicationContext();
-        CharSequence text;
-        int duration= Toast.LENGTH_SHORT;
-        Toast toast;
         switch (item.getItemId()) {
             case R.id.settings:
                 MyDialog.newInstance(MyDialog.PRECISION_DIALOG).show(getFragmentManager(), "precisin");
