@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyDialog extends DialogFragment{
+    private int index;
     public final static int EXIT_DIALOG=1;
     public final static int PRECISION_DIALOG=2;
     private int regcode;
@@ -71,12 +72,13 @@ public class MyDialog extends DialogFragment{
         View view = getActivity().getLayoutInflater().inflate(R.layout.layoutprecision,null);
         final SeekBar sk = view.findViewById(R.id.seekbar);
         final TextView tvnum = view.findViewById(R.id.tvnum);
-        tvnum.setText(String.format("%.0f",123.0));
-        sk.setProgress(0);
+        tvnum.setText(String.format("%." + index +"f",123.0));
+        sk.setProgress(index);
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 tvnum.setText(String.format("%."+i+"f",123.0));
+                index = i;
             }
 
             @Override
