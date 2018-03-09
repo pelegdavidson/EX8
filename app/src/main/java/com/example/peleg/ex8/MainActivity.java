@@ -18,7 +18,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-public class MainActivity extends Activity implements MyDialog.ResultListener{
+public class MainActivity extends Activity implements MyDialog.ResultListener, MyDialog.PrecisionListener{
+    private int indexpre = 0;
     EditText edt1;
     EditText edt2;
     int index;
@@ -68,6 +69,7 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
                 Intent i = new Intent(MainActivity.this, Main2Activity.class);
                 i.putExtra("content1", s1);
                 i.putExtra("content2", s2);
+                i.putExtra("content3", indexpre);
                 startActivityForResult(i, REGISTERCODE);
             }
         });
@@ -75,6 +77,7 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
 
     @Override
     public void onFinishDialog(int requestcode, Object results) {
+        this.indexpre=(int) results;
         switch (requestcode)
         {
             case MyDialog.EXIT_DIALOG:
@@ -95,6 +98,11 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
             Double d2 = Double.parseDouble(edt2.getText().toString());
             edt2.setText(String.format("%."+newPrecision+"f",d2));
         }
+    }
+
+    @Override
+    public Integer getCorrentPrecision() {
+        return indexpre;
     }
 
 
@@ -135,12 +143,14 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        String s1 = data.getStringExtra("content1");
+        String s2 = data.getStringExtra("content2");
         if (requestCode == REGISTERCODE && resultCode == RESULT_OK){
-            if(data.getStringExtra("content1").length()>0){
-                edt1.setText(data.getStringExtra("content1"));
+            if(s1.length()>0){
+                edt1.setText(String.format("%."+indexpre+"f",(Double.parseDouble(s1))));
             }
-            if(data.getStringExtra("content2").length()>0){
-                edt2.setText(data.getStringExtra("content2"));
+            if(s2.length()>0){
+                edt2.setText(String.format("%."+indexpre+"f",(Double.parseDouble(s2))));
             }
             if(edt1.getText().length() > 0 &&
                     edt2.getText().length() > 0&&
@@ -171,6 +181,23 @@ public class MainActivity extends Activity implements MyDialog.ResultListener{
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putInt("preindex",indexpre);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState!=null) {
+            indexpre = savedInstanceState.getInt("preindex");
+
         }
     }
 }

@@ -12,12 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyDialog extends DialogFragment{
-    private int index;
+
     public final static int EXIT_DIALOG=1;
     public final static int PRECISION_DIALOG=2;
     private int regcode;
     private static MyDialog dlg = null;
     private ResultListener listener;
+    private PrecisionListener resolutionListener;
 
     public static MyDialog newInstance(int requestCode){
         if(dlg==null)
@@ -40,6 +41,7 @@ public class MyDialog extends DialogFragment{
         super.onAttach(context);
         try {
             this.listener = (ResultListener) context;
+            this.resolutionListener = (PrecisionListener) context;
         } catch (ClassCastException e){
             throw new ClassCastException("hosting activity must implement ResultListener");
         }
@@ -55,6 +57,7 @@ public class MyDialog extends DialogFragment{
                             public void onClick(DialogInterface dialogInterface, int i) {
                                if(listener!=null)
                                    listener.onFinishDialog(regcode, "ok");
+                               dismiss();
                             }
                         }
                 )
@@ -72,13 +75,12 @@ public class MyDialog extends DialogFragment{
         View view = getActivity().getLayoutInflater().inflate(R.layout.layoutprecision,null);
         final SeekBar sk = view.findViewById(R.id.seekbar);
         final TextView tvnum = view.findViewById(R.id.tvnum);
-        tvnum.setText(String.format("%." + index +"f",123.0));
-        sk.setProgress(index);
+        tvnum.setText(String.format("%." + resolutionListener.getCorrentPrecision() +"f",123.0));
+        sk.setProgress(resolutionListener.getCorrentPrecision());
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 tvnum.setText(String.format("%."+i+"f",123.0));
-                index = i;
             }
 
             @Override
@@ -93,25 +95,33 @@ public class MyDialog extends DialogFragment{
         });
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
-                .setPositiveButton("Cancel",
+                .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(getActivity(), "You pushed cancel",
-                                        Toast.LENGTH_LONG).show();
+                                if(listener!=null)
+                                    listener.onFinishDialog(regcode,sk.getProgress());
                                 dismiss();
                                 }
                         })
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-                        listener.onFinishDialog(regcode,sk.getProgress());
                         dismiss();
                     }
                 });
     }
     public interface ResultListener{
         void onFinishDialog(int requestcode, Object results);
+    }
+    public interface PrecisionListener{
+        Integer getCorrentPrecision();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(getActivity(), "destroyyyyyyyyyyyy",
+                Toast.LENGTH_LONG).show();
     }
 }
